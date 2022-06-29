@@ -5,20 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const itens_repository_1 = __importDefault(require("../repositories/itens-repository"));
+//new
+const controllers_1 = require("../controllers");
 const itensRouter = express_1.default.Router();
 itensRouter.post("/itens", (req, res) => {
-    const item = req.body;
-    itens_repository_1.default.criar(item, (id) => {
-        if (id) {
-            res.status(201).location(`/itens/${id}`).send();
-        }
-        else {
-            res.status(400).send();
-        }
-    });
+    (0, controllers_1.controlerCriarConta)(req, res);
 });
 itensRouter.get("/itens", (req, res) => {
-    itens_repository_1.default.lerTodos((itens) => res.json(itens));
+    (0, controllers_1.controlerLerTodos)(req, res);
+    // itensRepository.lerTodos((itens) => res.json(itens));
 });
 itensRouter.get("/itens/:id", (req, res) => {
     const id = +req.params.id;

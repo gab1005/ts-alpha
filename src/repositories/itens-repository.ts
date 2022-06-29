@@ -4,7 +4,7 @@ import database from "./database";
 const itensRepository = {
   criar: (item: Item, callback: (id?: number) => void) => {
     const sql =
-      "INSERT INTO itens (nome, data_nascimento, email, cpf) VALUES (?, ?, ?, ?)";
+      "INSERT INTO user (nome, data_nascimento, email, cpf) VALUES (?, ?, ?, ?)";
     const params = [item.nome, item.data_nascimento, item.email, item.cpf];
     database.run(sql, params, function (_err) {
       callback(this?.lastID);
@@ -12,13 +12,13 @@ const itensRepository = {
   },
 
   lerTodos: (callback: (itens: Item[]) => void) => {
-    const sql = "SELECT * FROM itens";
+    const sql = "SELECT * FROM user";
     const params: any[] = [];
     database.all(sql, params, (_err, rows) => callback(rows));
   },
 
   ler: (id: number, callback: (item?: Item) => void) => {
-    const sql = "SELECT * FROM itens WHERE id = ?";
+    const sql = "SELECT * FROM user WHERE id = ?";
     const params = [id];
     database.get(sql, params, (_err, row) => callback(row));
   },
@@ -29,7 +29,7 @@ const itensRepository = {
     callback: (notFound: boolean) => void
   ) => {
     const sql =
-      "UPDATE itens SET nome = ?, data_nascimento = ?, email = ?, cpf = ? WHERE id = ?";
+      "UPDATE user SET nome = ?, data_nascimento = ?, email = ?, cpf = ? WHERE id = ?";
     const params = [item.nome, item.data_nascimento, item.email, item.cpf, id];
     database.run(sql, params, function (_err) {
       callback(this.changes === 0);
@@ -37,11 +37,12 @@ const itensRepository = {
   },
 
   apagar: (id: number, callback: (notFound: boolean) => void) => {
-    const sql = "DELETE FROM itens WHERE id = ?";
+    const sql = "DELETE FROM user WHERE id = ?";
     const params = [id];
     database.run(sql, params, function (_err) {
       callback(this.changes === 0);
     });
   },
 };
+
 export default itensRepository;

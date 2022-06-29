@@ -8,35 +8,21 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const itens_router_1 = __importDefault(require("./routers/itens-router"));
-// Porta do servidor
 const PORT = process.env.PORT || 5000;
-// Host do servidor
 const HOSTNAME = process.env.HOSTNAME || "http://localhost";
-// App Express
 const app = (0, express_1.default)();
-// JSON
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
-// Endpoint raiz
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
     res.send("Bem-vindo!");
 });
-// Cors
 app.use((0, cors_1.default)({
     origin: ["http://localhost:3000"],
 }));
-// Rotas
 app.use("/api", itens_router_1.default);
-// Resposta padrão para quaisquer outras requisições:
 app.use((req, res) => {
     res.status(404);
 });
-// Inicia o sevidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}`);
 });
-// Criar um novo item: POST /api/itens
-// Ler todos os itens: GET /api/itens
-// Ler um item específico: GET /api/itens/{id}
-// Atualizar um item: PUT /api/itens/{id}
-// Apagar um item: DELETE /api/itens/{id}

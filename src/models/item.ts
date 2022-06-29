@@ -1,5 +1,5 @@
 type Item = {
-  id?: number;
+  id?: number; //mudar para string
   nome: string;
   data_nascimento: string;
   email: string;
