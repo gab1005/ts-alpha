@@ -1,37 +1,28 @@
 import express from "express";
 import cors from "cors";
-
+import { criarConta } from "./routers";
 import dotenv from "dotenv";
-dotenv.config();
-
-import itensRouter from "./routers/user-routers";
-import contaRouter from "./routers/conta-routers";
-
-const PORT = process.env.PORT || 5000;
-
-const HOSTNAME = process.env.HOSTNAME || "http://localhost";
 
 const app = express();
+dotenv.config();
+const PORT = process.env.PORT || 4000;
+const HOST = process.env.HOST || "http://localhost";
+const corsConfig = { origin: "http://localhost" };
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.send("Bem-vindo!");
-});
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-  })
-);
-
-app.use("/api", itensRouter);
-app.use("/conta", contaRouter);
+app.use(criarConta);
 
 app.use((req, res) => {
-  res.status(404);
+  res.status(404).send("opa, não tem esse end point ai");
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}`);
+  console.log("porta 8080");
 });
+
+// app.use((req, res) => {
+//   res.status(404);
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}`);
+// });
